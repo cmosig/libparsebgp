@@ -529,9 +529,11 @@ parsebgp_error_t parsebgp_bgp_update_path_attrs_decode(
          single minimum-sized path attribute, and should be considered as
          "treat-as-withdraw" (https://tools.ietf.org/html/rfc7606#section-4).
        */
+        /*
       PARSEBGP_SKIP_INVALID_MSG(opts, buf, nread, 0,
         "Path attribute requires at least 3-4 bytes, but only %d bytes remain.",
         (int)(remain - nread));
+        */
       // If we pass the above macro, the user wants us to struggle on.
       *lenp = remain;
       return PARSEBGP_OK;
@@ -556,10 +558,12 @@ parsebgp_error_t parsebgp_bgp_update_path_attrs_decode(
          Length to be exceeded, and should be considered as
          "treat-as-withdraw" (https://tools.ietf.org/html/rfc7606#section-4).
        */
+        /*
       PARSEBGP_SKIP_INVALID_MSG(
         opts, buf, nread, 0,
         "Path attribute (type %d) has length %d, but only %d bytes remain.",
         type_tmp, len_tmp, (int)(remain - nread));
+        */
       // If we pass the above macro, the user wants us to struggle on.
       *lenp = remain;
       return PARSEBGP_OK;
@@ -567,9 +571,11 @@ parsebgp_error_t parsebgp_bgp_update_path_attrs_decode(
 
     // if this type is beyond the max type that we understand, skip it now
     if (type_tmp >= PARSEBGP_BGP_PATH_ATTRS_LEN) {
+        /*
       PARSEBGP_SKIP_NOT_IMPLEMENTED(
         opts, buf, nread, len_tmp,
         "BGP UPDATE Path Attribute %d is not yet implemented", type_tmp);
+        */
       continue;
     }
 
@@ -799,10 +805,12 @@ parsebgp_error_t parsebgp_bgp_update_path_attrs_decode(
     // Type 29
     case PARSEBGP_BGP_PATH_ATTR_TYPE_BGP_LS:
       // TODO: add support for BGP-LS
+      /*
       PARSEBGP_SKIP_NOT_IMPLEMENTED(
         opts, buf, nread, attr->len,
         "BGP UPDATE Path Attribute %d (BGP-LS) is not yet implemented",
         attr->type);
+    */
       slen = attr->len;
       break;
 
@@ -821,9 +829,11 @@ parsebgp_error_t parsebgp_bgp_update_path_attrs_decode(
       break;
 
     default:
+      /*
       PARSEBGP_SKIP_NOT_IMPLEMENTED(
         opts, buf, nread, attr->len,
         "BGP UPDATE Path Attribute %d is not yet implemented", attr->type);
+     */
       slen = attr->len;
       break;
     }
